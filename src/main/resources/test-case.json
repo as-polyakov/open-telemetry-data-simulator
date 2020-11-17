@@ -1,0 +1,58 @@
+{
+  "@type": "repeatGroup",
+  "elements": [
+    {
+      "@type": "span",
+      "name": "randomSpan",
+      "attributes": {
+        "type": "http",
+        "userId": "userA"
+      },
+      "body": {
+        "@type": "repeatGroup",
+        "elements": [
+          {
+            "@type": "metrics",
+            "elements": [
+              {
+                "name": "http.latency",
+                "value": "random",
+                "attrbutes": {
+                  "k1": "v1"
+                }
+              },
+              {
+                "name": "http.latency",
+                "value": "random",
+                "attrbutes": {
+                  "k1": "v1"
+                }
+              }
+            ]
+          }
+        ],
+        "count": 10
+      }
+    },
+    {
+      "@type": "metrics",
+      "elements": [
+        {
+          "name": "http1.latency",
+          "value": "random",
+          "attrbutes": {
+            "k1": "v1"
+          }
+        },
+        {
+          "name": "http1.latency",
+          "value": "random",
+          "attrbutes": {
+            "k1": "v1"
+          }
+        }
+      ]
+    }
+  ],
+  "count": 10
+}
