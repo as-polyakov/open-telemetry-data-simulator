@@ -38,7 +38,8 @@ public class SimulatorTest {
         RepeatGroupElement root = new RepeatGroupElement(el, 10);
         ObjectMapper mapper = new ObjectMapper(new JsonFactory()).registerModule(new GuavaModule());
         String valueAsString = mapper.writeValueAsString(root);
-        ScenarioElement e = mapper.readValue(valueAsString, RepeatGroupElement.class);
+        System.out.println(valueAsString);
+        ScenarioElement e = mapper.readValue(valueAsString, ScenarioElement.class);
         Assert.assertEquals(root, e);
     }
 
