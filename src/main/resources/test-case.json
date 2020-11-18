@@ -45,10 +45,10 @@
           }
         },
         {
-          "name": "http1.latency",
+          "name": "http2.latency",
           "value": "random",
           "attrbutes": {
-            "k1": "v1"
+            "service_id": "v1"
           }
         }
       ]

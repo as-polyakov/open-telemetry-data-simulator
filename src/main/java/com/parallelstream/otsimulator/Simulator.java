@@ -24,14 +24,15 @@ public class Simulator {
     private static IntervalMetricReader logginMetricReader;
     private static IntervalMetricReader otlpMetricReader;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         setupSdk();
 
         ScenarioVisitor visitor = new ScenarioVisitor();
         read(new File(args[0])).accept(visitor);
-        OpenTelemetrySdk.getTracerManagement().shutdown();
+        Thread.sleep(1000);
         logginMetricReader.shutdown();
         otlpMetricReader.shutdown();
+        OpenTelemetrySdk.getTracerManagement().shutdown();
 
     }
 
@@ -44,8 +45,9 @@ public class Simulator {
                 .setMetricProducers(Collections.singletonList(OpenTelemetrySdk.getMeterProvider().getMetricProducer()))
                 .setMetricExporter(new LoggingMetricExporter()).build();
         otlpMetricReader = IntervalMetricReader.builder()
+                .setExportIntervalMillis(10)
                 .setMetricProducers(Collections.singletonList(OpenTelemetrySdk.getMeterProvider().getMetricProducer()))
-                .setMetricExporter( OtlpGrpcMetricExporter.getDefault()).build();
+                .setMetricExporter(OtlpGrpcMetricExporter.getDefault()).build();
     }
 
     public static ScenarioElement read(File f) throws IOException {

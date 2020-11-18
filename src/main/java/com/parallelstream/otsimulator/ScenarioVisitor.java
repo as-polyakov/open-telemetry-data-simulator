@@ -5,6 +5,7 @@ import com.parallelstream.otsimulator.bindings.RepeatGroupElement;
 import com.parallelstream.otsimulator.bindings.ScenarioElement;
 import com.parallelstream.otsimulator.bindings.SpansElement;
 import io.opentelemetry.OpenTelemetry;
+import io.opentelemetry.common.Labels;
 import io.opentelemetry.context.Scope;
 import io.opentelemetry.metrics.LongValueRecorder;
 import io.opentelemetry.trace.Span;
@@ -24,7 +25,9 @@ public class ScenarioVisitor {
     public void visit(MetricsElement metricsElement) {
         metricsElement.getElements().forEach(m -> {
             LongValueRecorder recorder = OpenTelemetry.getMeter("test").longValueRecorderBuilder(m.getName()).build();
-            recorder.record(m.getValue().generate());
+            Labels.Builder labelsBuilder = Labels.newBuilder();
+            m.getAttrbutes().forEach(labelsBuilder::setLabel);
+            recorder.record(m.getValue().generate(), labelsBuilder.build());
         });
     }
 
