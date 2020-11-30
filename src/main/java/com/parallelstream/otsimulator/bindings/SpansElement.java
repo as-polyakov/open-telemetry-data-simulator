@@ -10,14 +10,14 @@ public class SpansElement extends ScenarioElement {
     @JsonProperty("name")
     private final String name;
     @JsonProperty("attributes")
-    private final ImmutableMap<String, String> attrbutes;
+    private final ImmutableMap<String, String> attributes;
     @JsonProperty("body")
     private final ScenarioElement body;
 
     @JsonCreator
     public SpansElement(@JsonProperty("name") String name, @JsonProperty("attributes") ImmutableMap<String, String> attributes, @JsonProperty("body") ScenarioElement body) {
         this.name = name;
-        this.attrbutes = attributes;
+        this.attributes = attributes;
         this.body = body;
     }
 
@@ -25,8 +25,8 @@ public class SpansElement extends ScenarioElement {
         return name;
     }
 
-    public ImmutableMap<String, String> getAttrbutes() {
-        return attrbutes;
+    public ImmutableMap<String, String> getAttributes() {
+        return attributes;
     }
 
     public ScenarioElement getBody() {
@@ -44,12 +44,12 @@ public class SpansElement extends ScenarioElement {
         if (o == null || getClass() != o.getClass()) return false;
         SpansElement that = (SpansElement) o;
         return Objects.equal(name, that.name) &&
-                Objects.equal(attrbutes, that.attrbutes) &&
+                Objects.equal(attributes, that.attributes) &&
                 Objects.equal(body, that.body);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, attrbutes, body);
+        return Objects.hashCode(name, attributes, body);
     }
 }

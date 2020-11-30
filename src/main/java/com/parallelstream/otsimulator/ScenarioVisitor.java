@@ -7,7 +7,7 @@ import com.parallelstream.otsimulator.bindings.SpansElement;
 import io.opentelemetry.OpenTelemetry;
 import io.opentelemetry.common.Labels;
 import io.opentelemetry.context.Scope;
-import io.opentelemetry.metrics.LongValueRecorder;
+import io.opentelemetry.metrics.LongCounter;
 import io.opentelemetry.trace.Span;
 import io.opentelemetry.trace.TracingContextUtils;
 
@@ -24,10 +24,10 @@ public class ScenarioVisitor {
 
     public void visit(MetricsElement metricsElement) {
         metricsElement.getElements().forEach(m -> {
-            LongValueRecorder recorder = OpenTelemetry.getMeter("test").longValueRecorderBuilder(m.getName()).build();
+            LongCounter recorder = OpenTelemetry.getMeter("test").longCounterBuilder(m.getName()).build();
             Labels.Builder labelsBuilder = Labels.newBuilder();
             m.getAttrbutes().forEach(labelsBuilder::setLabel);
-            recorder.record(m.getValue().generate(), labelsBuilder.build());
+            recorder.add(m.getValue().generate(), labelsBuilder.build());
         });
     }
 
@@ -40,7 +40,7 @@ public class ScenarioVisitor {
                 .build())) {
                 */
         Span.Builder spanBuilder = OpenTelemetry.getTracerProvider().get("test").spanBuilder(spansElement.getName());
-        spansElement.getAttrbutes().forEach(spanBuilder::setAttribute);
+        spansElement.getAttributes().forEach(spanBuilder::setAttribute);
         Span s = spanBuilder.startSpan();
         try (Scope ignored = TracingContextUtils.currentContextWith(s)) {
             spansElement.getBody().accept(this);

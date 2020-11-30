@@ -1,0 +1,20 @@
+{
+  "@type": "repeatGroup",
+  "elements": [
+    {
+      "@type": "metrics",
+      "elements": [
+        {
+          "name": "jis.read.issues.count",
+          "value": "200",
+          "attributes": {
+            "micros_service_id": "jira-issue-service",
+            "environment_type": "dev",
+            "deployment_id": "a"
+          }
+        }
+      ]
+    }
+  ],
+  "count": 1
+}
